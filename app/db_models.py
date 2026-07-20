@@ -8,6 +8,7 @@ class ToDoDB(Base):
     description = Column(String)
     completed = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    priority = Column(Integer, default=1)
 
 class User(Base):
     __tablename__ = "users"
