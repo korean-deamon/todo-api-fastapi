@@ -1,14 +1,18 @@
+import os
 import pytest
 import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-
+from sqlalchemy.pool import NullPool
+from dotenv import load_dotenv
 
 from app.app import app
 from app.db import Base, get_db
 
-SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///./test.db"
-engine = create_async_engine(SQLALCHEMY_DATABASE_URL)
+load_dotenv()
+
+TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
+engine = create_async_engine(TEST_DATABASE_URL, poolclass=NullPool)
 TestingSessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 async def override_get_db():
