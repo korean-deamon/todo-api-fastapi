@@ -4,3 +4,4 @@ __pycache__/
 *.db
 .claude
 .claude/settings.local.json.idea/
+.idea
